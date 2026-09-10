@@ -77,7 +77,7 @@ $pdost->execute();
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        voulez vous supprimer ce client ?
+        voulez vous supprimer cettttt client ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
