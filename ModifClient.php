@@ -3,6 +3,24 @@ include_once("header.php");
 include_once("main.php");
 echo  "id".$_GET["id"];
 
+ if (!empty($_POST) ){
+
+
+ $sql = "update client  set nom=:nom, ville=:ville, telephone=:tel where idclient=:id";
+
+    $st = $pdo->prepare($sql);
+
+    $st->execute([
+        "nom" => $_POST["nom"],
+         "ville" => $_POST["adress"],
+         "tel"=> $_POST["tel"],   
+         "id"=> $_POST["myid"],
+    ]);
+
+  }
+header("location:client.php");
+exit();
+
 if (!empty($_GET["id"]) ) {
 
     $rqt = "select * from client   where idclient=:id";
@@ -47,24 +65,8 @@ while($row=$st->fetch(pdo::FETCH_ASSOC)):
  echo  "idendwhile".$_GET["id"];
   }
 
-  if (!empty($_POST) ){
-
-  echo "id".$_GET["id"];
-
- $sql = "update client  set nom=:nom, ville=:ville, telephone=:tel where idclient=:id";
-
-    $st = $pdo->prepare($sql);
-
-    $st->execute([
-        "nom" => $_POST["nom"],
-         "ville" => $_POST["adress"],
-         "tel"=> $_POST["tel"],   
-         "id"=> $_POST["myid"],
-    ]);
-
-  }
-  ?>
-
+ 
+?>
 
 
 <?php 

@@ -20,6 +20,18 @@ include_once("main.php");
 
 
       <?php
+$list=[];
+$reqSup="select idarticle from article where idarticle in (select idarticle from ligne)";
+$pdostsup=$pdo->prepare($reqSup);
+$pdostsup->execute();
+
+foreach($pdostsup->fetchALL(PDO::FETCH_NUM )AS $tabvalues ){
+
+ foreach($tabvalues as $tabelm){
+$list[]=$tabelm;
+}
+}
+var_dump($list);
 
 $reqt="select * from article";
 $pdost=$pdo->prepare($reqt);
@@ -54,7 +66,7 @@ $pdost->execute();
  
         
 
-           <button type="button" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $ligne["idarticle"]?>">
+           <button type="button" class="btn btn-danger"  data-bs-toggle="modal" <?php if(in_array($ligne["idarticle"],$list)) {  echo "disabled" ;} ?>   data-bs-target="#exampleModal<?php echo $ligne["idarticle"]?>"   >
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
 </svg>
@@ -79,7 +91,7 @@ $pdost->execute();
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <a href="delete.php?id=<?php echo $ligne["idarticle"] ?>"  class="btn btn-danger">Supprimer</a>
+        <a href="deleteArticle.php?id=<?php echo $ligne["idarticle"] ?>"  class="btn btn-danger">Supprimer</a>
       </div>
     </div>
   </div>
