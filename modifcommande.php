@@ -15,7 +15,7 @@ $list[]=$tabelm;
 }
 //idarticle
 
-$list=[];
+$listAr=[];
 $reqAr="select idarticle from article ";
 $pdostAr=$pdo->prepare($reqAr);
 $pdostAr->execute();
@@ -41,6 +41,17 @@ $listAr[]=$tabelm;
             
          "id"=> $_POST["myid"],
     ]);
+$sql2 = "update ligne  set idarticle=:idar, qu=:qu where idcommande=:id";
+
+    $st2 = $pdo->prepare($sql2);
+
+    $st2->execute([
+        "idar" => $_POST["idar"],
+         "qu" => $_POST["qu"],
+            
+         "id"=> $_POST["myid"],
+    ]);
+
 header("location:commande.php");
 exit();
   }
@@ -66,7 +77,7 @@ while($row=$st->fetch(pdo::FETCH_ASSOC)):
     <div class="col-12">
         <input type="hidden" name="myid" value=<?php echo  $row["idcommande"]  ?> >
 </div>
-   <div class="col-12">
+   <div class="col-6">
           <label for="floatingTextarea">idclient</label>
 
   <select class="form-control" placeholder="description"  name="idcl" > 
@@ -77,24 +88,24 @@ while($row=$st->fetch(pdo::FETCH_ASSOC)):
         </option>
     <?php endforeach; ?>  </select>
 </div>
-  <div class="col-12">
+  <div class="col-6">
           <label for="floatingTextarea">idarticle</label>
 
-  <select class="form-control" placeholder="description"  name="idcl" > 
- <?php foreach ($list as $idcl): ?>
-        <option value="<?= htmlspecialchars($idcl) ?>"
-            <?= ($row["idclient"] == $idcl) ? "selected" : "" ?>>
-            <?= htmlspecialchars($idcl) ?>
+  <select class="form-control" placeholder="description"  name="idar" > 
+ <?php foreach ($listAr as $idar): ?>
+        <option value="<?= htmlspecialchars($idar) ?>"
+            <?= ($row["idclient"] == $idar) ? "selected" : "" ?>>
+            <?= htmlspecialchars($idar) ?>
         </option>
     <?php endforeach; ?>  </select>
 </div>
-  <div class="col-12">
+  <div class="col-6">
     <label for="inputAddress2" class="form-label">date</label>
     <input type="date" class="form-control" id="inputAddress2" name="dt"  value="<?php echo $row["date"] ?>"  required >
   </div>
-  <div class="col-12">
-    <label for="inputAddress2" class="form-label">date</label>
-    <input type="date" class="form-control" id="inputAddress2" name="dt"  value="<?php echo $row["date"] ?>"  required >
+  <div class="col-6">
+    <label for="inputAddress2" class="form-label">quantité</label>
+    <input type="text" class="form-control" id="qu" name="qu"    required >
   </div>
  
    <div class="col-12">
